@@ -1,18 +1,28 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Patch, Post, UseGuards } from '@nestjs/common';
 import { UsersService } from './user.service';
-import CreateUserDto from './dto/createUser.dto';
+import UpdateUserDto from './dto/updateUser.dto';
 import JwtAuthenticationGuard from '../authentification/jwt-authentication.guard';
- 
-@Controller('posts')
+import { LocalAuthenticationGuard } from '../authentification/local-authentication.guard';
+import RoleGuard from 'src/roles/role.guard';
+import Role from 'src/roles/role.enum';
+
+@Controller('user')
 export default class UserController {
   constructor(
     private readonly userService: UsersService
   ) {}
  
-//   @Post()
-//   @UseGuards(JwtAuthenticationGuard)
-//   async createPost(@Body() post: CreateUserDto) {
-//     // return this.postsService.createPost(post);
-//   }
+    @Patch()
+    @UseGuards(JwtAuthenticationGuard)
+    async update(@Body() userData: UpdateUserDto) {
+        return this.userService.update(userData.id, userData);
+    }
+
+    @Delete()
+    @UseGuards(RoleGuard(Role.Admin))
+    async delete(@Body() userData: UpdateUserDto) {
+        return this.userService.delete(userData.id);
+    }
+
 
 }

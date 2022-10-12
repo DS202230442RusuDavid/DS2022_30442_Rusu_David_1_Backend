@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import Role from "src/user/dto/role.enum";
+import Role from "src/roles/role.enum";
 
 @Entity()
 class User {
