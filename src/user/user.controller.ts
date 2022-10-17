@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { UsersService } from './user.service';
 import UpdateUserDto from './dto/updateUser.dto';
 import JwtAuthenticationGuard from '../authentification/jwt-authentication.guard';
 import { LocalAuthenticationGuard } from '../authentification/local-authentication.guard';
 import RoleGuard from 'src/roles/role.guard';
 import Role from 'src/roles/role.enum';
+import { get } from 'http';
 
 @Controller('user')
 export default class UserController {
@@ -24,5 +25,11 @@ export default class UserController {
         return this.userService.delete(userData.id);
     }
 
+    @Get(":id")
+    @UseGuards(RoleGuard(Role.Admin))
+    async findAll(@Param("id") id: number) {
+        return this.userService.findAll(id);
+    }
 
+    // The create method is found in the authentication module
 }
