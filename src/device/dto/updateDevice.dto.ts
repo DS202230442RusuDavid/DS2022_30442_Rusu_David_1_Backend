@@ -1,6 +1,10 @@
-import { IsEmail, IsString, IsNotEmpty, MinLength, IsOptional, IsNumber } from 'class-validator';
+import { IsString, IsOptional, IsNumber, IsNotEmpty } from 'class-validator';
 
 export default class UpdateDeviceDto {
+    @IsNumber()
+    @IsNotEmpty()
+    public id: number;
+
     @IsString()
     @IsOptional()
     public description: string;
@@ -11,7 +15,17 @@ export default class UpdateDeviceDto {
 
     @IsNumber()
     @IsOptional()
-    public maximumHourelyConsumption: number;
+    public maximumHourlyConsumption: number;
 
-    
+    @IsOptional()
+    public userId : number;
+
 }
+
+// @IsNumber()
+// @IsOptional()
+// public consumption : number;
+
+// @IsDate()
+// @IsOptional()
+// public timeStamp : Date;

@@ -12,8 +12,8 @@ export class UsersService {
     private usersRepository: Repository<User>
   ) {}
  
-  async findAll(id: number) {
-    return await this.usersRepository.find({where:{id}});
+  async findAll(userData: User) {
+    return await this.usersRepository.find({where:{...userData}});
   }
 
   async getByEmail(email: string) {
@@ -33,15 +33,16 @@ export class UsersService {
   }
 
   async create(userData: CreateUserDto) {
-    const newUser = await this.usersRepository.create(userData);
+    const newUser = this.usersRepository.create(userData);
     await this.usersRepository.save(newUser);
     return newUser;
   }
 
-  async update(id: number, userData: UpdateUserDto) {
-    if (await this.usersRepository.findOne({where:{id}})) {
-      if(await this.usersRepository.update(id, {...userData, id: undefined})){
-        return await this.usersRepository.findOne({where:{id}});
+  async update(userData: UpdateUserDto) {
+    const userToUpdate = await this.usersRepository.findOne({where:{id: userData.id}});
+    if (userToUpdate) {
+      if(await this.usersRepository.save({...userToUpdate, ...userData})){
+        return await this.usersRepository.findOne({where:{id:userData.id}});
       }
       throw new HttpException("User not updated", HttpStatus.BAD_REQUEST);
     }

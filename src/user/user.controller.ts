@@ -2,10 +2,9 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@n
 import { UsersService } from './user.service';
 import UpdateUserDto from './dto/updateUser.dto';
 import JwtAuthenticationGuard from '../authentification/jwt-authentication.guard';
-import { LocalAuthenticationGuard } from '../authentification/local-authentication.guard';
 import RoleGuard from 'src/roles/role.guard';
 import Role from 'src/roles/role.enum';
-import { get } from 'http';
+import User from 'src/db/entities/user.entity';
 
 @Controller('user')
 export default class UserController {
@@ -16,7 +15,7 @@ export default class UserController {
     @Patch()
     @UseGuards(JwtAuthenticationGuard)
     async update(@Body() userData: UpdateUserDto) {
-        return this.userService.update(userData.id, userData);
+        return this.userService.update(userData);
     }
 
     @Delete()
@@ -25,10 +24,10 @@ export default class UserController {
         return this.userService.delete(userData.id);
     }
 
-    @Get(":id")
+    @Get()
     @UseGuards(RoleGuard(Role.Admin))
-    async findAll(@Param("id") id: number) {
-        return this.userService.findAll(id);
+    async findAll(@Body() userData: User) {
+        return this.userService.findAll(userData);
     }
 
     // The create method is found in the authentication module
