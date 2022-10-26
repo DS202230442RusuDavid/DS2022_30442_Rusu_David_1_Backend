@@ -10,10 +10,11 @@ import UpdateDeviceDto from "./dto/updateDevice.dto";
 export default class DeviceController {
     constructor(private readonly deviceService: DeviceService) {}
 
-    @Get()
-    @UseGuards(RoleGuard(Role.Admin))
-    async findOne(@Body() device : Device){
-        return this.deviceService.findOne(device);
+    @Post("/getDevices")
+    @UseGuards(RoleGuard(Role.User))
+    async find(@Body() device : Device){
+        console.log(device);
+        return this.deviceService.find(device);
     }
 
     @Post()

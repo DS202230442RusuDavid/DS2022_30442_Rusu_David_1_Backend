@@ -19,8 +19,8 @@ import { EnergyService } from './energy.service';
 export default class EnergyController {
   constructor(private readonly energyService: EnergyService) {}
 
-  @Get()
-  @UseGuards(RoleGuard(Role.Admin))
+  @Post('/getEnergy')
+  @UseGuards(RoleGuard(Role.User))
   public async getEnergy(@Body() energy: Energy){
     return await this.energyService.getEnergy(energy);
   }

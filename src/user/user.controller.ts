@@ -24,8 +24,8 @@ export default class UserController {
         return this.userService.delete(userData.id);
     }
 
-    @Get()
-    @UseGuards(RoleGuard(Role.Admin))
+    @Post("/getUser")
+    @UseGuards(RoleGuard(Role.User))
     async findAll(@Body() userData: User) {
         return this.userService.findAll(userData);
     }

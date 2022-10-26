@@ -54,7 +54,7 @@ export class DeviceService {
     return newDevice;
   }
 
-  async findOne(device: Device) {
-    return await this.deviceRepository.findOne({ where: { ...device } });
+  async find(device: Device) {
+    return await this.deviceRepository.find({ where: { ...device } });
   }
 }
