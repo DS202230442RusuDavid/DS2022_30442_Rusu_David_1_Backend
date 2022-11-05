@@ -15,12 +15,12 @@ class Device {
     public address: string;
 
     @Column()
-    public maximumHourelyConsumption: number;
+    public maximumHourlyConsumption: number;
 
     @OneToMany(type => Energy, energy => energy.device)
     public energy: Energy[];
 
-    @ManyToOne(type => User, user => user.devices)
+    @ManyToOne(type => User, user => user.devices,{cascade: true, onDelete: 'CASCADE'})
     public user: User;
 }
 

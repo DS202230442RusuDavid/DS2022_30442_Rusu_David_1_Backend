@@ -11,5 +11,5 @@ export default class CreateDeviceDto {
   
   @IsNumber()
   @IsNotEmpty()
-  public maximumHourelyConsumption: number;
+  public maximumHourlyConsumption: number;
 }

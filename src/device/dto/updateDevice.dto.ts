@@ -21,11 +21,3 @@ export default class UpdateDeviceDto {
     public userId : number | null;
 
 }
-
-// @IsNumber()
-// @IsOptional()
-// public consumption : number;
-
-// @IsDate()
-// @IsOptional()
-// public timeStamp : Date;
