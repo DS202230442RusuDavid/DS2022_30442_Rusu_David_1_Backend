@@ -7,11 +7,11 @@ FROM node:18-alpine As development
 ###################
 # ENV 
 ###################
-ENV DB_PORT=3306
-ENV DB_HOST=172.18.0.2
-ENV DB_USER=root
-ENV DB_PASSWORD=root
-ENV DB_NAME=oeup
+# ENV DB_PORT=3306
+# ENV DB_HOST=172.18.0.2
+# ENV DB_USER=root
+# ENV DB_PASSWORD=root
+# ENV DB_NAME=oeup
 ENV JWT_SECRET=secret
 ENV JWT_EXPIRATION_TIME=900000
 
@@ -34,11 +34,11 @@ FROM node:18-alpine As build
 ###################
 # ENV 
 ###################
-ENV DB_PORT=3306
-ENV DB_HOST=172.18.0.2
-ENV DB_USER=root
-ENV DB_PASSWORD=root
-ENV DB_NAME=oeup
+# ENV DB_PORT=3306
+# ENV DB_HOST=172.18.0.2
+# ENV DB_USER=root
+# ENV DB_PASSWORD=root
+# ENV DB_NAME=oeup
 ENV JWT_SECRET=secret
 ENV JWT_EXPIRATION_TIME=900000
 
@@ -67,11 +67,11 @@ FROM node:18-alpine As production
 ###################
 # ENV 
 ###################
-ENV DB_PORT=3306
-ENV DB_HOST=172.18.0.2
-ENV DB_USER=root
-ENV DB_PASSWORD=root
-ENV DB_NAME=oeup
+# ENV DB_PORT=3306
+# ENV DB_HOST=172.18.0.2
+# ENV DB_USER=root
+# ENV DB_PASSWORD=root
+# ENV DB_NAME=oeup
 ENV JWT_SECRET=secret
 ENV JWT_EXPIRATION_TIME=900000
 
