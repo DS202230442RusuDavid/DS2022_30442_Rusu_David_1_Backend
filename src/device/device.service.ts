@@ -39,10 +39,12 @@ export class DeviceService {
         if (user) {
           deviceToUpdate.user = user;
         } else {
+          
           throw new HttpException('User not found', HttpStatus.NOT_FOUND);
         }
+      }else if(device.userId === null){
+        deviceToUpdate.user = null;
       }
-
       return await this.deviceRepository.save({ ...deviceToUpdate, ...device });
     }
     throw new HttpException('Device not found', HttpStatus.NOT_FOUND);

@@ -18,14 +18,6 @@ export default class UpdateDeviceDto {
     public maximumHourlyConsumption: number;
 
     @IsOptional()
-    public userId : number;
+    public userId : number | null;
 
 }
-
-// @IsNumber()
-// @IsOptional()
-// public consumption : number;
-
-// @IsDate()
-// @IsOptional()
-// public timeStamp : Date;

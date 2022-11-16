@@ -12,7 +12,7 @@ class Energy {
     @Column()
     public timeStamp : Date;
 
-    @ManyToOne(type => Device, device => device.energy)
+    @ManyToOne(type => Device, device => device.energy,{cascade: true, onDelete: 'CASCADE'})
     public device: Device;
     
 }
