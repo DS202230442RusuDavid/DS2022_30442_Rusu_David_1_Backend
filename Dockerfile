@@ -2,7 +2,7 @@
 # BUILD FOR LOCAL DEVELOPMENT
 ###################
 
-FROM node:18-alpine As development
+FROM node:18.12.1-slim As development
 
 ###################
 # ENV 
@@ -29,7 +29,7 @@ USER node
 # BUILD FOR PRODUCTION
 ###################
 
-FROM node:18-alpine As build
+FROM node:18.12.1-slim As build
 
 ###################
 # ENV 
@@ -62,7 +62,7 @@ USER node
 # PRODUCTION
 ###################
 
-FROM node:18-alpine As production
+FROM node:18.12.1-slim As production
 
 ###################
 # ENV 
