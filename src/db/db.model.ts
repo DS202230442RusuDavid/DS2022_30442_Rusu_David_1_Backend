@@ -10,8 +10,8 @@ import Energy from "./entities/energy.entity";
         ConfigModule.forRoot(),
         TypeOrmModule.forRoot({
         type: 'mysql',
-        host:  process.env.MYSQL_CONTAINER_NAME || 'db', 
-        port: parseInt(process.env.MYSQL_TCP_PORT) || 8000,
+        host:  process.env.MYSQL_CONTAINER_NAME || 'localhost', 
+        port: parseInt(process.env.MYSQL_TCP_PORT) || 3306,
         username:  process.env.DATABASE_LOGIN_USER || 'root',
         password:  process.env.MYSQL_ROOT_PASSWORD || 'root',
         database:  process.env.MYSQL_DATABASE || 'oeup',
