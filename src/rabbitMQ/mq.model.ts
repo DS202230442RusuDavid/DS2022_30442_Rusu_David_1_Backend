@@ -1,5 +1,7 @@
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { Module } from '@nestjs/common';
+import EnergyModule from 'src/energy/energy.modules';
+import { EnergyService } from 'src/energy/energy.service';
 import { MessagingService } from './message.service';
 
 //RABBITMQ CONNECTION VARIABLES
@@ -13,6 +15,7 @@ const EXCHANGE_NAME = process.env.EXCHANGE_NAME!;
       uri: AMQP_URL,
     }),
     RabbitModule,
+    EnergyModule
   ],
   providers: [MessagingService],
 })

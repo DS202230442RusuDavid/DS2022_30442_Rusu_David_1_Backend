@@ -42,4 +42,5 @@ export default class EnergyController {
   public async deleteEnergy(@Body() energy: Energy) {
     return await this.energyService.deleteEnergy(energy);
   }
+
 }

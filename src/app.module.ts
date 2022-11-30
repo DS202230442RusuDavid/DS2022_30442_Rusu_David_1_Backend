@@ -5,6 +5,7 @@ import { AuthenticationModule } from './authentification/authentication.module';
 import DeviceModule from './device/device.module';
 import EnergyModule from './energy/energy.modules';
 import { RabbitModule } from './rabbitMQ/mq.model';
+import { AlertModule } from './websocket/alert.module';
 @Module({
   imports: [
     DBModule,
@@ -12,7 +13,8 @@ import { RabbitModule } from './rabbitMQ/mq.model';
     UsersModule, 
     DeviceModule,
     EnergyModule,
-    RabbitModule
+    RabbitModule,
+    AlertModule,
   ],
   controllers: [],
   providers: [],

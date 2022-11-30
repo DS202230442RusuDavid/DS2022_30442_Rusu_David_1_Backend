@@ -1,10 +1,15 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { io } from 'socket.io-client';
 import Device from 'src/db/entities/device.entity';
 import Energy from 'src/db/entities/energy.entity';
 import { Repository } from 'typeorm';
 import CreateEnergyDto from './dto/create.energy.dts';
 import UpdateEnergyDto from './dto/update.energy.dto';
+
+const SOCKET_SERVER = process.env.SOCKET_SERVER!;
+
+const socket = io(SOCKET_SERVER);
 
 @Injectable()
 export class EnergyService {
@@ -56,5 +61,9 @@ export class EnergyService {
     if (!deleteResponse.affected) {
       throw new HttpException('Energy not found', HttpStatus.NOT_FOUND);
     }
+  }
+
+  public async handleEnergyEvent(energy: Energy) {
+    socket.emit("alert",JSON.stringify(energy));
   }
 }
