@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { io } from 'socket.io-client';
 import Device from 'src/db/entities/device.entity';
 import Energy from 'src/db/entities/energy.entity';
-import { Repository } from 'typeorm';
+import { LessThanOrEqual, MoreThanOrEqual, Repository } from 'typeorm';
 import CreateEnergyDto from './dto/create.energy.dts';
 import UpdateEnergyDto from './dto/update.energy.dto';
 
@@ -63,7 +63,42 @@ export class EnergyService {
     }
   }
 
+  //Get the first and last entry of the energy consumption for a device in the provided hour
+  public async getHourlyConsumption(deviceId: number, date: Date) {
+    //Get the last entry of the hour
+    const lastEntry = await this.energyRepository.findOne({
+      where: { device: { id: deviceId
+      }, timeStamp: LessThanOrEqual(date) },
+      order: { timeStamp: 'DESC' },
+    });
+
+    //Get the first entry of the hour
+    date.setMinutes(0);
+    date.setSeconds(0);
+    const firstEntry = await this.energyRepository.findOne({
+      where: { device: { id: deviceId }, timeStamp: MoreThanOrEqual(date) },
+      order: { timeStamp: 'ASC' },
+    });
+
+    if (firstEntry && lastEntry) {
+      return lastEntry.consumption - firstEntry.consumption;
+    }
+  }
+  
   public async handleEnergyEvent(energy: Energy) {
-    socket.emit("alert",JSON.stringify(energy));
+    //add the energy to the database
+    await this.createEnergy({deviceId: energy.device.id, consumption: energy.consumption, timeStamp: energy.timeStamp} as CreateEnergyDto);
+
+    //If the energy consumption in the last hour is greater then the device threshold, send an alert
+    const hourlyConsumption = await this.getHourlyConsumption(energy.device.id, energy.timeStamp);
+    const device = await this.deviceRepository.findOne({ where: { id: energy.device.id } });
+    if (
+      hourlyConsumption > device.maximumHourlyConsumption) {
+      socket.emit('alert', {
+        deviceId: device.id,
+        deviceName: device.address,
+        hourlyConsumption: hourlyConsumption,
+      });
+    }
   }
 }

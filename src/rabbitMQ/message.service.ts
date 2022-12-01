@@ -20,6 +20,6 @@ export class MessagingService {
   public async pubSubHandler(msg: EnergyEvent) {  
     //convert timestamp to date
     const date = new Date(msg.timestamp);
-    this.energyService.handleEnergyEvent({id: msg.device_id, consumption: msg.measurement_value, timeStamp: date} as Energy);
+    this.energyService.handleEnergyEvent({device:{id: msg.device_id} , consumption: msg.measurement_value, timeStamp: date} as Energy);
   }
 }
