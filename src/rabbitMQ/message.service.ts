@@ -17,7 +17,8 @@ export class MessagingService {
     queue: QUEUE_NAME,
   })
 
-  public async pubSubHandler(msg: EnergyEvent) {  
+  public async pubSubHandler(msg: EnergyEvent) { 
+    console.log(msg); 
     //convert timestamp to date
     const date = new Date(msg.timestamp);
     this.energyService.handleEnergyEvent({device:{id: msg.device_id} , consumption: msg.measurement_value, timeStamp: date} as Energy);
